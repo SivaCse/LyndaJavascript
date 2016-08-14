@@ -14,4 +14,4 @@ This is a Commercial course
 
 ## License
 
-Not public domain see Udemy to purchase the course tutorials
+Not public domain see Lynda.com to purchase the course tutorials
