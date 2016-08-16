@@ -67,17 +67,23 @@
 //        }
 //}
 
-window.onload = newCard;
+window.onload = initAll;
 var usedNums = new Array(76);
 
-function newCard() {
+function initAll() {
 	if (document.getElementById) {
-		for (var i = 0; i < 24; i++) {
-			setSquare(i);
+                document.getElementById("reload").onclick = anothercard;
+                newCard();
 		}
-	} else {
+	else {
 		alert("Update your browser");
 	}
+}
+
+function newCard(){
+      		for (var i = 0; i < 24; i++) {
+			setSquare(i);
+                }
 }
 
 function setSquare(thisSquare) {
@@ -96,6 +102,13 @@ function setSquare(thisSquare) {
 function getNewNum() {
 	return Math.floor(Math.random() * 15);
 }
-    
+ 
+function anothercard(){
+        for (var i=1; i < usedNums.length; i++){
+           usedNums[i] = false;     
+        }
+        newCard();
+        return false;
+}   
     
         
