@@ -26,13 +26,76 @@
 //}
 
 
-window.onload = initAll;
+//window.onload = initAll;
+//
+//function initAll(){
+//        document.getElementById("redirect").onclick = clickHandler();
+//        }
+//        
+//function clickHandler(){
+//        alert("Ow - that hurt");
+//        return false;
+//}
 
-function initAll(){
-        document.getElementById("redirect").onclick = clickHandler();
-        }
-        
-function clickHandler(){
-        alert("Ow - that hurt");
-        return false;
+//window.onload = initAll;
+
+//function initAll(){
+//        switch(navigator.platform){
+//                case "Win32" : alert("You are running Windows");
+//                        break;
+//                case "MacPPC" : alert("You are running Mac");
+//                        break;
+//                case "Linux": alert("You are running Linux");
+//                        break;
+//                default : alert("You are running " + navigator.platform);                 
+//        }
+//}
+
+
+//window.onload = initAll;
+//
+//function initAll(){
+//        var ans = prompt("Enter a number", "");
+//        try{
+//                if(!ans || isNaN(ans) || ans<0){
+//                        throw new Error("Not a valid number");
+//                }
+//                alert("The square root of " + ans + " is " + Math.sqrt(ans));
+//        }
+//        catch (errMsg){
+//                alert(errMsg.message);
+//        }
+//}
+
+window.onload = newCard;
+var usedNums = new Array(76);
+
+function newCard() {
+	if (document.getElementById) {
+		for (var i = 0; i < 24; i++) {
+			setSquare(i);
+		}
+	} else {
+		alert("Update your browser");
+	}
 }
+
+function setSquare(thisSquare) {
+	var currSquare = "square" + thisSquare;
+	var colPlace = new Array(0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4);
+	var colBasis = colPlace[thisSquare] * 15;
+	var newNum;
+	do {
+		newNum = colBasis + getNewNum() + 1;
+	} while (usedNums[newNum]);
+
+		usedNums[newNum] = true;
+		document.getElementById(currSquare).innerHTML = newNum;
+}
+
+function getNewNum() {
+	return Math.floor(Math.random() * 15);
+}
+    
+    
+        
