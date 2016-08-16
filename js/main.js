@@ -67,14 +67,41 @@
 //        }
 //}
 
-function start() {
-  initAll();
-  rollOverInit();
-  initLinks();
-  choosePic();
-  initForm();
+//function start() {
+//  initAll();
+//  rollOverInit();
+//  initLinks();
+//  choosePic();
+//  initForm();
+//  initMenu();
+//  carForms();
+//}
+//window.onload = start;
+
+addOnload(initAll);
+addOnload(rollOverInit);
+addOnload(initLinks);
+addOnload(choosePic);
+addOnload(initForm);
+addOnload(initMenu);
+addOnload(carForms);
+
+
+function addOnload(newFunction) {
+	var oldOnload = window.onload;
+	
+	if (typeof oldOnload == "function") {
+		window.onload = function() {
+			if (oldOnload) {
+				oldOnload();
+			}
+			newFunction();
+		}
+	}
+	else {
+		window.onload = newFunction;
+	} 
 }
-window.onload = start;
 
 //~~~~~~~~~~~~~~~~~~~~~~~First Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
@@ -254,5 +281,155 @@ function jumpPage() {
 
 	if (newPage !== "") {
 		window.location = newPage;
+	}
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+function initMenu() {
+	document.getElementById("months").selectedIndex = 0;
+	document.getElementById("months").onchange = populateDays;
+}
+
+function populateDays() {
+	var monthDays = new Array(31,28,31,30,31,30,31,31,30,31,30,31);
+	var monthStr = this.options[this.selectedIndex].value;
+	
+	if (monthStr !== "") {
+		var theMonth = parseInt(monthStr);
+					
+		document.getElementById("days").options.length = 0;
+		for(var i=0; i<monthDays[theMonth]; i++) {
+			document.getElementById("days").options[i] = new Option(i+1);
+		}
+	}
+}
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+function carForms() {
+	for (var i = 0; i < document.forms.length; i++) {
+		document.forms[i].onsubmit = function() {
+			return validForm();
+		}
+	}
+}
+//
+//function validForm() {
+//	var allGood = true;
+//	var allTags = document.getElementsByTagName("*");
+//
+//	for (var i = 0; i < allTags.length; i++) {
+//		if (!validTag(allTags[i])) {
+//			allGood = false;
+//		}
+//	}
+//	return allGood;
+//
+//	function validTag(thisTag) {
+//		var outClass = "";
+//		var allClasses = thisTag.className.split(" ");
+//
+//		for (var j = 0; j < allClasses.length; j++) {
+//			outClass += validBasedOnClass(allClasses[j]) + " ";
+//		}
+//
+//		thisTag.className = outClass;
+//
+//		if (outClass.indexOf("invalid") > -1) {
+//			thisTag.focus();
+//			if (thisTag.nodeName == "INPUT") {
+//				thisTag.select();
+//			}
+//			return false;
+//		}
+//		return true;
+//
+//		function validBasedOnClass(thisClass) {
+//			var classBack = "";
+//
+//			switch (thisClass) {
+//				case "":
+//				case "invalid":
+//					break;
+//				case "reqd":
+//					if (allGood && thisTag.value === "") {
+//						classBack = "invalid ";
+//					}
+//					classBack += thisClass;
+//					break;
+//				default:
+//					classBack += thisClass;
+//			}
+//			return classBack;
+//		}
+//	}
+//}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+function validForm() {
+	var allGood = true;
+	var allTags = document.getElementsByTagName("*");
+
+	for (var i=0; i<allTags.length; i++) {
+		if (!validTag(allTags[i])) {
+			allGood = false;
+		}
+	}
+	return allGood;
+
+	function validTag(thisTag) {
+		var outClass = "";
+		var allClasses = thisTag.className.split(" ");
+	
+		for (var j=0; j<allClasses.length; j++) {
+			outClass += validBasedOnClass(allClasses[j]) + " ";
+		}
+	
+		thisTag.className = outClass;
+	
+		if (outClass.indexOf("invalid") > -1) {
+			thisTag.focus();
+			if (thisTag.nodeName == "INPUT") {
+				thisTag.select();
+			}
+			return false;
+		}
+		return true;
+		
+		function validBasedOnClass(thisClass) {
+			var classBack = "";
+		
+			switch(thisClass) {
+				case "":
+				case "invalid":
+					break;
+				case "reqd":
+					if (allGood && thisTag.value === "") {
+						classBack = "invalid ";
+					}
+					classBack += thisClass;
+					break;
+				case "radio":				
+				case "email":
+					classBack += thisClass;
+					break;
+				default:
+					if (allGood && !crossCheck(thisTag,thisClass)) {
+						classBack = "invalid ";
+					}
+					classBack += thisClass;
+			}
+			return classBack;
+		}
+				
+		function crossCheck(inTag,otherFieldID) {
+			if (!document.getElementById(otherFieldID)) {
+				return false;
+			}
+			return (inTag.value == document.getElementById(otherFieldID).value);
+		}
 	}
 }

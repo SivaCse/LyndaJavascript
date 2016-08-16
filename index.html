@@ -163,6 +163,57 @@
             </noscript>
         </form>
     </div>
+    
+    
+    <form action="#">
+        <select id="months">
+            <option value="">Month</option>
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+        </select>
+        &nbsp;
+        
+        <select id="days">
+            <option>Day</option>
+        </select>
+    </form>
+ 
+    <h2 align="center">Car Picker</h2>
+   <form action="#">
+       <p>
+           <label for="emailAddr">Enter your email address:&nbsp;&nbsp;&nbsp;&nbsp; <input id="emailAddr" type="text" size="30" class="reqd email" />
+           </label></br />
+           <label for="emailAddr2">Re-enter your email address:<input id="emailAddr2" type="text" size="30" class="reqd emailAddr" />
+           </label>
+       </p>
+       <p><label for="color">Colors:
+           <select id="color" class="reqd">
+               <option value="" selected="selected">Choose a color</option>
+               <option value="Red">Red</option>
+               <option value="Green">Green</option>
+               <option value="Blue">Blue</option>
+           </select>
+       </label></p>
+       <p>Options:
+           <label for="sunroof"><input type="checkbox" id="sunroof" value="Yes" />Sunroof (Two door only)</label>
+           <label for="pWindows"><input type="checkbox" id="pWindows" value="Yes" />Power Windows</label>
+       </p>
+       <p><label for="DoorCt">Doors:&nbsp;&nbsp;
+           <input type="radio" id="twoDoor" name="DoorCt" value="twoDoor" class="radio" />Two
+           <input type="radio" id="fourDoor" name="DoorCt" value="fourDoor" class="radio" />Four
+       </label></p>
+       <p><input type="submit" value="Submit" />&nbsp;<input type="reset" /></p>
+   </form>       
         
       <footer>
         <p>&copy; Gareth Thomas 2016</p>
