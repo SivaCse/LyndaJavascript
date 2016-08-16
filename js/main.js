@@ -70,6 +70,9 @@
 function start() {
   initAll();
   rollOverInit();
+  initLinks();
+  choosePic();
+  initForm();
 }
 window.onload = start;
 
@@ -128,6 +131,17 @@ function rollOverInit(){
         }  
 }
 
+//function rollOverInit() {
+//	for (var i=0; i<document.links.length; i++) {
+//		var linkObj =  document.links[i];
+//		if (linkObj.id) {
+//			var imgObj = document.getElementById(linkObj.id + "Img");
+//			if (imgObj) {
+//				setupRollover(linkObj,imgObj);
+//			}
+//		}
+//	}
+//}
 
 function setupRollover(thisImage) {
 	thisImage.outImage = new Image();
@@ -146,6 +160,18 @@ function setupRollover(thisImage) {
 	thisImage.parentNode.onblur = rollOutChild;
 	thisImage.parentNode.onfocus = rollOverChild;        
 }
+
+//function setupRollover(thisLink,thisImage) {
+//	thisLink.imgToChange = thisImage;
+//	thisLink.onmouseout = rollOut;
+//	thisLink.onmouseover = rollOver;	
+//	
+//	thisLink.outImage = new Image();
+//	thisLink.outImage.src = thisImage.src;
+//
+//	thisLink.overImage = new Image();
+//	thisLink.overImage.src = "img/" + thisLink.id + "_on.gif";
+//}
 
 function rollOut() {
 	this.src = this.outImage.src;
@@ -167,4 +193,66 @@ function rollOverChild() {
 	this.childImg.src = this.childImg.overImage.src;
 }
 
+//function rollOut() {
+//	this.imgToChange.src = this.outImage.src;
+//}
+//
+//function rollOver() {
+//	this.imgToChange.src = this.overImage.src;
+//}
+
 //~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+
+var myPix = new Array("img/pathfinder.gif","img/surveyor.gif","img/surveyor98.gif");
+var thisPic = 0;
+
+function initLinks(){
+        document.getElementById("prevLink").onclick = processPrevious;
+        document.getElementById("nextLink").onclick = processNext;  
+}
+
+function processPrevious() {
+	if (thisPic === 0) {
+		thisPic = myPix.length;
+	}
+	thisPic--;
+	document.getElementById("myPicture").src = myPix[thisPic];
+	return false;
+}
+
+function processNext() {
+	thisPic++;
+	if (thisPic == myPix.length) {
+		thisPic = 0;
+	}
+	document.getElementById("myPicture").src = myPix[thisPic];
+	return false;
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+var newPix = new Array("img/teacup00.jpg","img/teacup01.jpg","img/teacup02.jpg","img/teacup03.jpg","img/teacup04.jpg","img/teacup05.jpg","img/teacup06.jpg","img/teacup07.jpg");
+
+function choosePic() {
+	randomNum = Math.floor((Math.random() * newPix.length));
+	document.getElementById("myRandom").src = newPix[randomNum];
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+window.onunload = function() {};
+
+function initForm() {
+	document.getElementById("newLocation").selectedIndex = 0;
+	document.getElementById("newLocation").onchange = jumpPage;
+}
+
+function jumpPage() {
+	var newLoc = document.getElementById("newLocation");
+	var newPage = newLoc.options[newLoc.selectedIndex].value;
+
+	if (newPage !== "") {
+		window.location = newPage;
+	}
+}
