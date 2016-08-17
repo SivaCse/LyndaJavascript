@@ -85,6 +85,15 @@ addOnload(choosePic);
 addOnload(initForm);
 addOnload(initMenu);
 addOnload(carForms);
+addOnload(initImages);
+addOnload(nameFieldInit);
+addOnload(showCookies);
+addOnload(initPageCookie);
+//addOnload(cookieDelete);
+addOnload(initForm2);
+addOnload(initDate);
+addOnload(showTheTime);
+
 
 
 function addOnload(newFunction) {
@@ -433,3 +442,269 @@ function validForm() {
 		}
 	}
 }
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+
+function initImages() {
+	for (var i=0; i<document.images.length; i++) {
+		document.images[i].ondblclick = newWindow;
+	}
+}
+
+function newWindow() {
+	var imgName = "img/" + this.id + ".jpg";
+	var imgWindow = window.open(imgName, "imgWin", "width=320,height=240,scrollbars=no");
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+//document.onkeydown = keyHit;
+//var thePic = 0;
+//
+//function keyHit(evt) {
+//	var mySpacePix = new Array("img/callisto.jpg","img/europa.jpg","img/io.jpg","img/ganymede.jpg");
+//	var imgCt = mySpacePix.length-1;
+//	var ltArrow = 37;
+//	var rtArrow = 39;
+//	var thisKey;
+//
+//	if (evt) {
+//		thisKey = evt.which;
+//	}
+//	else {
+//		thisKey = window.event.keyCode;
+//	}
+//	
+//	if (thisKey == ltArrow) {
+//		chgSlide(-1);
+//	}
+//	else {
+//		if (thisKey == rtArrow) {
+//			chgSlide(1);
+//		}
+//	}
+//	return false;
+//
+//	function chgSlide(direction) {
+//		thePic = thePic + direction;
+//		if (thePic > imgCt) {
+//			thePic = 0;
+//		}
+//		if (thePic < 0) {
+//			thePic = imgCt;
+//		}
+//		document.getElementById("myPicture").src = mySpacePix[thePic];
+//	}
+//}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+function nameFieldInit() {
+	var userName = "";
+	if (document.cookie !== "") {
+		userName = document.cookie.split("=")[1];
+	}
+
+	document.getElementById("nameField").value = userName;
+	document.getElementById("nameField").onblur = setCookie;
+}
+
+function setCookie() {
+	var expireDate = new Date();
+	expireDate.setMonth(expireDate.getMonth()+6);
+
+	var userName = document.getElementById("nameField").value;
+	document.cookie = "userName=" + userName + ";path=/;expires=" + expireDate.toGMTString();
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+function showCookies() {
+	var outMsg = "";
+
+	if (document.cookie === "") {
+		outMsg = "There are no cookies here";
+	}
+	else {
+		var thisCookie = document.cookie.split("; ");
+		for (var i=0; i<thisCookie.length; i++) {
+			outMsg += "Cookie name is '" + thisCookie[i].split("=")[0];
+			outMsg += "', and the value is '" + thisCookie[i].split("=")[1] + "'<br />";
+		}
+	}
+	document.getElementById("cookieData").innerHTML = outMsg;
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+
+//function initPageCookie() {
+//	var expireDate = new Date();
+//	expireDate.setMonth(expireDate.getMonth()+6);
+//
+//	var hitCt = parseInt(cookieVal("pageHit"));
+//	hitCt++;
+//
+//	document.cookie = "pageHit=" + hitCt + ";path=/;expires=" + expireDate.toGMTString();
+//	document.getElementById("pageHits").innerHTML = "You have visited this page " + hitCt + " times.";
+//}
+//
+//function cookieVal(cookieName) {
+//	var thisCookie = document.cookie.split("; ");
+//
+//	for (var i=0; i<thisCookie.length; i++) {
+//		if (cookieName == thisCookie[i].split("=")[0]) {
+//			return thisCookie[i].split("=")[1];
+//		}
+//	}
+//	return 0;
+//}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+
+//function cookieDelete() {
+//	var cookieCt = 0;
+//
+//	if (document.cookie !== "" && confirm("Do you want to delete the cookies?")) {
+//		var thisCookie = document.cookie.split("; ");
+//		cookieCt = thisCookie.length;
+//
+//		var expireDate = new Date();
+//		expireDate.setDate(expireDate.getDate()-1);
+//
+//		for (var i=0; i<cookieCt; i++) {
+//			var cookieName = thisCookie[i].split("=")[0];
+//			document.cookie = cookieName + "=;path=/;expires=" + expireDate.toGMTString();
+//		}
+//	}
+//	document.getElementById("cookieData").innerHTML = "Number of cookies deleted: " + cookieCt;
+//}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+
+function initPageCookie() {
+	var now = new Date();
+	var expireDate = new Date();
+	expireDate.setMonth(expireDate.getMonth()+6);
+
+	var hitCt = parseInt(cookieVal("pageHit"));
+	hitCt++;
+
+	var lastVisit = cookieVal("pageVisit");
+	if (lastVisit === 0) {
+		lastVisit = "";
+	}
+
+	document.cookie = "pageHit=" + hitCt + ";path=/;expires=" + expireDate.toGMTString();
+	document.cookie = "pageVisit=" + now + ";path=/;expires=" + expireDate.toGMTString();
+
+	var outMsg = "You have visited this page " + hitCt + " times.";
+	if (lastVisit !== "") {
+		outMsg += "<br />Your last visit was " + lastVisit;
+	}
+	document.getElementById("cookieData").innerHTML = outMsg;
+}
+
+function cookieVal(cookieName) {
+	var thisCookie = document.cookie.split("; ");
+
+	for (var i=0; i<thisCookie.length; i++) {
+		if (cookieName == thisCookie[i].split("=")[0]) {
+			return thisCookie[i].split("=")[1];
+		}
+	}
+	return 0;
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+function initForm2() {
+	document.getElementsByTagName("form")[0].onsubmit = addNode;
+	document.getElementById("deleteNode").onclick = delNode;
+}
+
+function addNode() {
+	var inText = document.getElementById("textArea").value;
+	var newText = document.createTextNode(inText);
+
+	var newGraf = document.createElement("p");
+	newGraf.appendChild(newText);
+
+	var docBody = document.getElementsByTagName("body")[0];
+	docBody.appendChild(newGraf);
+
+	return false;
+}
+
+function delNode() {
+	var allGrafs = document.getElementsByTagName("p");
+	
+	if (allGrafs.length > 1) {
+		var lastGraf = allGrafs.item(allGrafs.length-1);
+		var docBody = document.getElementsByTagName("body")[0];
+		var removed = docBody.removeChild(lastGraf);
+	}
+	else {
+		alert("Nothing to remove!");
+	}
+
+	return false;
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+function initDate() {
+	var dayName = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+	var monName = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+	
+	var now = new Date();
+	var thisMonth = now.getMonth() + 1;
+	
+	var dtString = "Today is " + dayName[now.getDay()] + ", and the date can be written as:<ul><li>";
+	dtString += monName[now.getMonth()] + " " + now.getDate() + ", " + now.getFullYear() + "</li><li>";
+	dtString += now.getDate() + " " + monName[now.getMonth()] + " " + now.getFullYear() + "</li><li>";
+	dtString += thisMonth + "-" + now.getDate() + "-" + now.getFullYear() + "</li><li>";
+	dtString += now.getDate() + "-" + thisMonth + "-" + now.getFullYear() + "</li></ul>";
+
+	document.getElementById("dtField").innerHTML = dtString;
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+function showTheTime() {
+	var now = new Date();
+
+	var theTime = showTheHours(now.getHours()) + showZeroFilled(now.getMinutes()) + showZeroFilled(now.getSeconds()) + showAmPm();
+	document.getElementById("showTime").innerHTML = theTime;
+	setTimeout("showTheTime()",1000);
+	
+	function showTheHours(theHour) {
+		if (theHour === 0) {
+			return 12;
+		}
+		if (theHour < 13) {
+			return theHour;
+		}
+		return theHour-12;
+	}
+	
+	function showZeroFilled(inValue) {
+		if (inValue > 9) {
+			return ":" + inValue;
+		}
+		return ":0" + inValue;
+	}
+	
+	function showAmPm() {
+		if (now.getHours() < 12) {
+			return " am";
+		}
+		return " pm";
+	}
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~Next Module~~~~~~~~~~~~~~~~~~~~~~~~~~//
