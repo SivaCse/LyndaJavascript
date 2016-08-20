@@ -59,10 +59,61 @@ input+select, input+input {
 }
 
 
+div {
+	padding-bottom: 10px;
+	background-color: #6FF;
+	width: 220px;
+}
 
+ul.menu {
+	display: none;
+	list-style-type: none;
+	margin-top: 5px;
+}
 
+a.menuLink {
+	font-size: 16px;
+	font-weight: bold;
+}
 
+a {
+	text-decoration: none;
+}
 
+#slideshow {
+	padding: 0 10px 10px 10px;
+	float: left;
+}
+
+#imgText {
+	padding: 10px 0 0 10px;
+	float: left;
+	width: 200px;
+	height: 150px;
+	border-color: black;
+	border-width: 1px 0 0 1px;
+	border-style: solid;
+}
+
+div.navBar {
+	background-color: #CCC;
+	width: 175px;
+	position: relative;
+	top: -1.0em;
+	right: -20px;
+	float: right;
+	padding: 20px 0 0 20px;
+	border-left: 2px groove #999;
+	border-bottom: 2px groove #999;
+}
+
+.typeBtn {
+	font: 9px/10px verdana, geneva, arial, helvetica, sans-serif;
+}
+
+.typeBtn2 {
+	font: 14px/15px Times New Roman, Times, serif;
+}
 
 
 
